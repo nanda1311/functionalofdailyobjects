@@ -1,0 +1,11 @@
+services:
+  - type: web
+    name: dailyobjects-django
+    env: python
+    buildCommand: ""
+    startCommand: gunicorn dailyobjects.wsgi:application
+    envVars:
+      - key: DJANGO_SETTINGS_MODULE
+        value: dailyobjects.settings
+      - key: SECRET_KEY
+        generateValue: true
