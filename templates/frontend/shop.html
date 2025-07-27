@@ -1,0 +1,44 @@
+{% extends 'frontend/base.html' %}
+{% load static %}
+
+
+{% block title %}
+     <title>shop</title>
+{% endblock title %}
+     
+
+
+
+{% block content %}
+    <div class="content-wrapper">
+        <div class="container">
+            <div class="product-grid">
+                {% for x in products %}
+                <div class="product-card">
+                    <a href="{% url 'product_detail' x.slug %}" class="product-card-link">
+                        {% if x.image %}
+                        <div class="image-container">
+                            <img class="product-image" src="{{x.image.url}}" alt="{{x.name}}" loading="lazy">
+                        </div>
+                        {% endif %}
+                        <div class="product-info">
+                            <h3 class="product-name">{{ x.name }}</h3>
+                            <div class="price-container">
+                                <span class="current-price">₹{{ x.discounted_price }}</span>
+                                {% if x.discounted_price < x.price %}
+                                <span class="original-price">₹{{ x.price }}</span>
+                                {% endif %}
+                            </div>
+                            <p class="product-description">
+                                {{ x.description|truncatechars:80 }}
+                            </p>
+                            <button class="add-to-cart">Add to Cart</button>
+                        </div>
+                    </a>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+
+{% endblock content %}

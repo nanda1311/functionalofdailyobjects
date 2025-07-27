@@ -1,0 +1,40 @@
+{% extends 'frontend/base.html' %}
+{% load static %}
+
+
+{% block title %}
+     <title>Artist Gallery</title>
+{% endblock title %}
+     
+
+
+
+{% block content %}
+<div class="container py-5">
+  <h1 class="mb-5 text-center fw-bold">Gallery Collection</h1>
+
+  {% for image_obj in galleries %}
+    <div class="row align-items-center mb-5">
+      {% if forloop.counter|divisibleby:2 %}
+        <div class="col-md-6 order-md-1 order-2">
+          <p class="fs-5">{{ image_obj.description|default:"No description available." }}</p>
+        </div>
+        <div class="col-md-6 order-md-2 order-1 text-center">
+          <img src="{{ image_obj.image.url }}" alt="Gallery Image" class="img-fluid rounded" style="max-height: 400px; width: auto;">
+        </div>
+      {% else %}
+        <div class="col-md-6 order-md-1 order-1 text-center">
+          <img src="{{ image_obj.image.url }}" alt="Gallery Image" class="img-fluid rounded" style="max-height: 400px; width: auto;">
+        </div>
+        <div class="col-md-6 order-md-2 order-2">
+          <p class="fs-5">{{ image_obj.description|default:"No description available." }}</p>
+        </div>
+      {% endif %}
+    </div>
+  {% empty %}
+    <p class="text-center text-muted">No images available.</p>
+  {% endfor %}
+</div>
+
+
+{% endblock content %}

@@ -1,0 +1,72 @@
+{% extends 'backend/base.html' %}
+
+{% block content %}
+<div class="container">
+    <h1 class="my-4">{{ title }}</h1>
+    
+    <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        
+        <div class="form-group mb-3">
+            {{ form.name.label_tag }}
+            {{ form.name }}
+            {{ form.name.errors }}
+        </div>
+        
+        <div class="form-group mb-3">
+            {{ form.description.label_tag }}
+            {{ form.description }}
+            {{ form.description.errors }}
+        </div>
+        
+        <div class="form-group mb-3">
+            {{ form.video.label_tag }}
+            {{ form.video }}
+            {{ form.video.errors }}
+            {% if form.instance.video %}
+                <div class="mt-2">
+                    <small>Current: <a href="{{ form.instance.video.url }}" target="_blank">{{ form.instance.video.name }}</a></small>
+                </div>
+            {% endif %}
+        </div>
+        
+        <div class="form-group mb-3">
+             {{ form.product_image.label_tag }}
+             {{ form.product_image }}
+             {{ form.product_image.errors }}
+             {% if form.instance.product_image %}
+             <div class="mt-2">
+                  <img src="{{ form.instance.product_image.url }}" width="100">
+               </div>
+               {% endif %}
+          </div>
+
+          <div class="form-group mb-3">
+               <p>URL of Product :</p>
+          {{form.product_url}}
+          </div>
+        
+        <div class="row mb-3">
+            <div class="col-md-6">
+                <div class="form-group">
+                    {{ form.actual_price.label_tag }}
+                    {{ form.actual_price }}
+                    {{ form.actual_price.errors }}
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    {{ form.current_price.label_tag }}
+                    {{ form.current_price }}
+                    {{ form.current_price.errors }}
+                </div>
+            </div>
+        </div>
+        
+        <div class="form-group mb-3">
+            <button type="submit"style="margin-bottom: 50px;"  class="btn btn-primary">Save</button>
+            <a style="margin-bottom: 50px;"  href="{% url 'video_products_list' %}" class="btn btn-secondary">Cancel</a>
+        </div>
+    </form>
+</div>
+{% endblock %}

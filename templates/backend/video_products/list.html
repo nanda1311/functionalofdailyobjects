@@ -1,0 +1,232 @@
+{% extends 'backend/base.html' %}
+
+{% block content %}
+<div class="container">
+    <h1 class="my-4">Video Products</h1>
+    
+    <div class="mb-4">
+        <a href="{% url 'create_video_product' %}" class="btn btn-primary">Create Video Product</a>
+    </div>
+</div>
+
+    <div class="table-responsive">
+        <table class="table table-striped table-hover">
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Image</th>
+                    <th>Video</th>
+                    <th>Actual Price</th>
+                    <th>Current Price</th>
+                    <th>Discount</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for product in video %}
+                <tr>
+                    <td>{{ product.name }}</td>
+                    <td>
+                        <img src="{{ product.product_image.url }}" alt="{{ product.name }}" width="50">
+                    </td>
+                    <td>
+                        <div class="video-preview-container">
+                            <video width="100" height="100" muted loop class="video-thumbnail">
+                                <source src="{{ product.video.url }}" type="video/mp4">
+                                Your browser does not support the video tag.
+                            </video>
+                            <video width="400" height="300" controls class="video-expanded">
+                                <source src="{{ product.video.url }}" type="video/mp4">
+                                Your browser does not support the video tag.
+                            </video>
+                        </div>
+                    </td>
+                    <td>${{ product.actual_price }}</td>
+                    <td>${{ product.current_price }}</td>
+                    <td>{{ product.discount_percentage }}%</td>
+                    <td>
+                        <a href="{% url 'edit_video_product' product.pk %}" class="btn btn-sm btn-warning">Edit</a>
+                        <button onclick="deleteVideoProduct({{ product.pk }})" class="btn btn-sm btn-danger">Delete</button>
+                    </td>
+                </tr>
+                {% empty %}
+                <tr>
+                    <td colspan="7" class="text-center">No video products found.</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+<style>
+    .video-preview-container {
+        position: relative;
+        display: inline-block;
+    }
+    
+    .video-thumbnail {
+        display: block;
+        cursor: pointer;
+        transition: all 0.3s ease;
+    }
+    .table-responsive{
+     margin-top: -640px;
+    }
+
+
+
+.video-expanded {
+    position: fixed;
+    top: 35%;
+    left: 80%;
+    transform: translate(-50%, -50%);
+    display: none;
+    z-index: 500;
+    background: #fff;
+    border-radius: 5px;
+    max-width: 80vw;
+    max-height: 40vh;
+}
+
+</style>
+
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script>
+    function deleteVideoProduct(id) {
+        const deleteUrl = `{% url 'delete_video_product' 0 %}`.replace('0', id);
+        
+        Swal.fire({
+            title: "Are you sure?",
+            text: "You won't be able to revert this!",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#3085d6",
+            cancelButtonColor: "#d33",
+            confirmButtonText: "Yes, delete it!"
+        }).then((result) => {
+            if (result.isConfirmed) {
+                fetch(deleteUrl, {
+                    method: 'POST',
+                    headers: {
+                        'X-CSRFToken': '{{ csrf_token }}',
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({})
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        Swal.fire(
+                            'Deleted!',
+                            'Video product has been deleted.',
+                            'success'
+                        ).then(() => {
+                            window.location.reload();
+                        });
+                    } else {
+                        Swal.fire(
+                            'Error!',
+                            'Failed to delete video product.',
+                            'error'
+                        );
+                    }
+                })
+                .catch(error => {
+                    Swal.fire(
+                        'Error!',
+                        'An error occurred while deleting the video product.',
+                        'error'
+                    );
+                });
+            }
+        });
+    }
+</script>
+<script>
+    // Video hover play functionality
+    document.addEventListener('DOMContentLoaded', function() {
+        const videoContainers = document.querySelectorAll('.video-preview-container');
+        
+        videoContainers.forEach(container => {
+            const thumbnail = container.querySelector('.video-thumbnail');
+            const expanded = container.querySelector('.video-expanded');
+            
+            // Show and play expanded video on hover
+            container.addEventListener('mouseenter', () => {
+                expanded.style.display = 'block';
+                expanded.play().catch(e => console.log("Autoplay prevented:", e));
+            });
+            
+            // Hide and pause expanded video when mouse leaves
+            container.addEventListener('mouseleave', () => {
+                expanded.style.display = 'none';
+                expanded.pause();
+                expanded.currentTime = 0;
+            });
+            
+            // Click on thumbnail to toggle expanded view
+            thumbnail.addEventListener('click', (e) => {
+                e.preventDefault();
+                if (expanded.style.display === 'block') {
+                    expanded.style.display = 'none';
+                    expanded.pause();
+                    expanded.currentTime = 0;
+                } else {
+                    expanded.style.display = 'block';
+                    expanded.play().catch(e => console.log("Autoplay prevented:", e));
+                }
+            });
+        });
+    });
+
+    function deleteVideoProduct(id) {
+        const deleteUrl = `{% url 'delete_video_product' 0 %}`.replace('0', id);
+        
+        Swal.fire({
+            title: "Are you sure?",
+            text: "You won't be able to revert this!",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#3085d6",
+            cancelButtonColor: "#d33",
+            confirmButtonText: "Yes, delete it!"
+        }).then((result) => {
+            if (result.isConfirmed) {
+                fetch(deleteUrl, {
+                    method: 'POST',
+                    headers: {
+                        'X-CSRFToken': '{{ csrf_token }}',
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({})
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        Swal.fire(
+                            'Deleted!',
+                            'Video product has been deleted.',
+                            'success'
+                        ).then(() => {
+                            window.location.reload();
+                        });
+                    } else {
+                        Swal.fire(
+                            'Error!',
+                            'Failed to delete video product.',
+                            'error'
+                        );
+                    }
+                })
+                .catch(error => {
+                    Swal.fire(
+                        'Error!',
+                        'An error occurred while deleting the video product.',
+                        'error'
+                    );
+                });
+            }
+        });
+    }
+</script>
+{% endblock %}

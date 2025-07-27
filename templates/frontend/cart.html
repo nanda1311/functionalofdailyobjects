@@ -1,0 +1,345 @@
+{% extends 'frontend/base.html' %}
+{% load static %}
+
+
+{% block title %}
+     <title>Product Detail</title>
+{% endblock title %}
+     
+
+
+
+{% block content %}
+  <style>
+    * {
+      box-sizing: border-box;
+      font-family: 'Roboto', sans-serif;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      background: #fff;
+      color: #000;
+      padding: 30px;
+      margin-bottom: 20px;
+    }
+
+    h1 {
+      font-size: 28px;
+      font-weight: 700;
+      margin-bottom: 30px;
+      margin-left: 655px;
+    }
+
+    .container {
+      display: flex;
+      justify-content: space-between;
+    }
+
+    .left-section, .right-section {
+      padding: 10px;
+    }
+
+    .left-section {
+      flex: 2;
+    }
+
+    .product {
+      display: flex;
+      align-items: center;
+      margin-bottom: 30px;
+      border-bottom: 1px solid #eee;
+      padding-bottom: 20px;
+    }
+
+    .product img {
+      width: 130px;
+      height: auto;
+      margin-right: 20px;
+    }
+
+    .product-details {
+      flex: 1;
+    }
+
+    .product-details h4 {
+      font-size: 15px;
+      margin-bottom: 8px;
+    }
+
+    .price {
+      font-weight: bold;
+      font-size: 15px;
+    }
+
+    .original-price {
+      text-decoration: line-through;
+      color: #999;
+      margin-left: 10px;
+    }
+
+    .quantity-controls {
+      margin-top: 10px;
+      display: flex;
+      align-items: center;
+    }
+
+    .quantity-controls button {
+      width: 30px;
+      height: 30px;
+      border: 1px solid #ccc;
+      background: #fff;
+      font-size: 18px;
+      cursor: pointer;
+    }
+
+    .quantity-controls span {
+      width: 40px;
+      text-align: center;
+      display: inline-block;
+    }
+
+    .delete {
+      font-size: 20px;
+      color: #444;
+      cursor: pointer;
+      margin-left: 30px;
+    }
+
+    .right-section {
+      flex: 1;
+      padding-left: 50px;
+    }
+
+    .right-section > div {
+      margin-bottom: 25px;
+    }
+
+    .summary-box h3 {
+      font-size: 18px;
+      font-weight: bold;
+      margin-bottom: 15px;
+    }
+
+    .summary-item {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 10px;
+      font-size: 14px;
+    }
+
+    .grand-total {
+      font-weight: bold;
+      font-size: 16px;
+      border-top: 1px solid #ccc;
+      padding-top: 10px;
+    }
+
+    .btn-add {
+      padding: 6px 16px;
+      border: 1px solid #00b388;
+      color: #00b388;
+      border-radius: 20px;
+      font-size: 14px;
+      cursor: pointer;
+      background: #fff;
+      float: right;
+    }
+
+    .icon-text {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 15px;
+      cursor: pointer;
+    }
+
+    .icon-text span {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .icon {
+      width: 20px;
+    }
+    .checkout-fixed {
+        position: unset;
+        width: 100%;
+        background-color: #17b57e;
+        color: white;
+        font-weight: 700;
+        font-size: 16px;
+        border: none;
+        padding: 16px 0;
+        text-align: center;
+        z-index: 1000;
+        border-radius: 12px;
+     }
+    @media (max-width: 768px) {
+    body {
+        padding: 15px;
+    }
+
+    h1 {
+        font-size: 22px;
+        margin-bottom: 20px;
+        text-align: center;
+    }
+
+    .container {
+        flex-direction: column;
+    }
+
+    .left-section {
+        max-height: none !important;
+        overflow-y: visible;
+        padding: 0;
+    }
+
+    .right-section {
+        padding: 0;
+        margin-top: 30px;
+    }
+
+    .product {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .product img {
+        width: 10%;
+        max-width: 300px;
+        margin-bottom: 10px;
+    }
+
+    .product-details {
+        width: 100%;
+    }
+
+    .product-details h4 {
+        font-size: 14px;
+    }
+
+    .quantity-controls {
+        gap: 10px;
+        flex-wrap: wrap;
+    }
+
+    .icon-text {
+        flex-direction: row;
+        align-items: center;
+        gap: 10px;
+        justify-content: space-between;
+    }
+
+    .icon-text img {
+        width: 20px;
+    }
+
+    .icon-text span {
+        flex-grow: 1;
+        font-size: 14px;
+        margin-left: 10px !important;
+        margin-right: 10px !important;
+    }
+
+    .btn-add {
+        font-size: 13px;
+        padding: 5px 12px;
+    }
+
+    .summary-box h3 {
+        font-size: 16px;
+    }
+
+    .summary-item {
+        font-size: 13px;
+    }
+
+    .grand-total {
+        font-size: 15px;
+    }
+    .checkout-fixed {
+        width: 91%;
+        padding-right: 20px;
+        margin-left: 14px;
+        margin-right: -28px;
+        margin-bottom: 10px;
+        border-radius: 10px;
+    }
+   }
+
+  </style>
+</head>
+<body>
+
+<h1>SHOPPING BAG</h1>
+<div class="container">
+  <div class="left-section" style="max-height: 500px; overflow-y: auto;">
+    {% for item in cart_items %}
+    <div class="product">
+      <img src="{{ item.product.image.url }}" alt="{{ item.product.name }}">
+      <div class="product-details">
+        <h4>{{ item.product.name }}</h4>
+        <div class="price">
+          ₹{{ item.product.discounted_price }}
+          {% if item.product.discounted_price < item.product.price %}
+          <span class="original-price">₹{{ item.product.price }}</span>
+          {% endif %}
+        </div>
+        <div class="quantity-controls">
+          <form method="post" action="{% url 'update_cart_quantity' item.id %}">
+            {% csrf_token %}
+            <button type="submit" name="action" value="decrease">-</button>
+            <span>{{ item.quantity }}</span>
+            <button type="submit" name="action" value="increase">+</button>
+            <button type="submit" name="action" value="remove" class="delete">🗑</button>
+          </form>
+        </div>
+      </div>
+    </div>
+    {% empty %}
+    <p>No items in your cart.</p>
+    {% endfor %}
+  </div>
+
+  <div class="right-section">
+    <div class="icon-text">
+      <img src="{% static 'images/gift.png' %}" style="width: 20px;">
+      <span style="margin-left: -105px;">MAKE IT A GIFT FOR ₹300</span>
+      <button class="btn-add">+ ADD</button>
+    </div>
+
+    <div class="icon-text">
+      <img src="{% static 'images/discount.png' %}" style="width: 20px;">
+      <span style="margin-right: 216px;">COUPONS & OFFERS</span>
+    </div>
+
+    <div class="icon-text">
+      <img src="{% static 'images/gift-card.png' %}" style="width: 20px;">
+      <span style="margin-right: 221px;">REDEEM GIFT CARD</span>
+    </div>
+
+    <div class="summary-box">
+      <h3>ORDER SUMMARY</h3>
+      <div class="summary-item">
+        <span>Item Total ({{ total_items }} Items)</span>
+        <span>₹{{ total_price }}</span>
+      </div>
+      <div class="summary-item">
+        <span>Shipping</span>
+        <span>FREE</span>
+      </div>
+      <div class="summary-item grand-total">
+        <span>Grand Total</span>
+        <span>₹{{ total_price }}</span>
+      </div>
+      <div style="font-size: 13px; color: #666; margin-top: 8px;">(Inclusive of Taxes)</div>
+    </div>
+
+    <button class="checkout-fixed">CHECKOUT</button>
+  </div>
+</div>
+{% endblock content %}

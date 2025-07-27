@@ -1,0 +1,134 @@
+{% load static %}
+<div class="container">
+    <div class="accordion accordion-flush" id="accordionFlushExample">
+        <div class="accordion-item">
+           <h2 class="accordion-header" id="flush-headingOne">
+               <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseOne" aria-expanded="false" aria-controls="flush-collapseOne">
+                    MOST SEARCHED ON DAILYOBJECTS
+               </button>
+           </h2>
+          <div id="flush-collapseOne" class="name accordion-collapse collapse" aria-labelledby="flush-headingOne" data-bs-parent="#accordionFlushExample">
+               {% for product in products %}
+               <div class="accordion-body">
+                    <p class="name1">{{ product.name }}</p>
+               </div>
+               {% empty %}
+               <div class="accordion-body">No products found.</div>
+               {% endfor %}
+          </div>
+      </div>
+        <div class="accordion-item">
+            <h2 class="accordion-header" id="flush-headingTwo">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseTwo" aria-expanded="false" aria-controls="flush-collapseTwo">
+                    GIFTS
+                </button>
+            </h2>
+            <div id="flush-collapseTwo" class="accordion-collapse collapse" aria-labelledby="flush-headingTwo" data-bs-parent="#accordionFlushExample">
+                <div class="accordion-body">
+                    Placeholder content for this accordion, which is intended to demonstrate the class. This is the second item's accordion body. Let's imagine this being filled with some actual content.
+                </div>
+            </div>
+        </div>
+        <div class="accordion-item">
+            <h2 class="accordion-header" id="flush-headingThree">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseThree" aria-expanded="false" aria-controls="flush-collapseThree">
+                    BLOGS
+                </button>
+            </h2>
+            <div id="flush-collapseThree" class="accordion-collapse collapse" aria-labelledby="flush-headingThree" data-bs-parent="#accordionFlushExample">
+                <div class="accordion-body">
+                    Placeholder content for this accordion, which is intended to demonstrate the class. This is the third item's accordion body. Nothing more exciting happening here in terms of content, but
+                    just filling up the space to make it look, at least at first glance, a bit more representative of how this would look in a real-world application.
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+    <div class="container">
+    <div class="nav-item">
+     <a href="{% url 'home' %}">
+     <img class="logo" src="{% static 'images/image.png'%}" alt=" ">
+     </a>
+     <div class="icons">
+      <img src="{% static 'images/instagram.png' %}" alt="">
+      <img src="{% static 'images/facebook.png' %}" alt="">
+      <img src="{% static 'images/twitter.png' %}" alt="">
+      <img src="{% static 'images/youtube.png' %}" alt="">
+     </div>
+     <div class="icons1">
+      <img src="{% static 'images/gplay.avif' %}" alt="">
+      <img src="{% static 'images/appstore.avif' %}" alt="">
+     </div>
+    </div>
+    </div> 
+
+
+
+          <footer class="footer" style="background-color: #000; color: #fff;">
+               <div class="container-fluid p-0">
+                    <div class="row">
+                         <div class="col-lg-12">
+                              <div class="container">
+                                   <div class="footer__copyright py-5">
+                                   <p class="footer__copyright-text mb-0">© Copyright 2025 <a href="#" class="footer__copyright-link" style="color: #fff;">MMD Group</a>, All rights reserved.</p>
+                                   </div>
+                              </div>
+                              <div class="btn-back-top">
+                                   <a href="#" class="btn-back-top__link">
+                                   <i class="bi bi-arrow-up btn-back-top__icon" style="color: #fff;"></i>
+                                   </a>
+                              </div>
+                         </div>
+                    </div>
+               </div>
+          </footer>
+
+
+
+ <style>
+        body {
+          font-family: Arial, sans-serif;
+          margin: 0;
+          padding: 0;
+        }
+        .logo{
+          margin-left: -20px;
+        }
+
+        .nav-item {
+          display: flex;
+          align-items: center;
+          padding: 10px 20px;
+          background-color: #fff;
+          border-bottom: 1px solid #eee;
+        }
+        .icons{
+          margin-left: 750px;
+          gap: 10px;
+          justify-content: space-between;
+          display: flex;
+          width: 20px;
+          height: 30px;
+        }
+        .name{
+          font-size: 10px;
+          justify-content: space-between;
+          display: flex;
+          flex-wrap: wrap;
+        }
+        .name .accordion-body{
+          width: fit-content;
+        }
+        .name1{
+          width: fit-content;
+        }
+        .icons1{
+          margin-left: 150px;
+          gap: 10px;
+          justify-content: space-between;
+          display: flex;
+          width: 20px;
+          height: 30px;
+        }
+    </style>

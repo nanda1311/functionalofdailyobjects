@@ -1,0 +1,99 @@
+{% extends 'backend/base.html' %}
+{% load static %}
+
+{% block title %}
+    <title>{{ user.username }} - Customer Details</title>
+{% endblock title %}
+    
+
+
+
+
+{% block content %}
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding: 30px;
+            background-color: #fafafa;
+        }
+
+        h1 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .section {
+            background-color: white;
+            padding: 20px;
+            margin-bottom: 30px;
+            border-radius: 6px;
+            box-shadow: 0 1px 5px rgba(0,0,0,0.1);
+        }
+
+        .section h2 {
+            color: #4a90e2;
+            margin-bottom: 10px;
+        }
+
+        ul {
+            list-style-type: disc;
+            margin-left: 20px;
+        }
+
+        .empty {
+            color: #888;
+        }
+    </style>
+</head>
+<body>
+    <h1>{{ user.username }}'s Details</h1>
+     <div class="section">
+          <h2>Profile Info</h2>
+          <p><strong>Full Name:</strong> {{ profile.name }}</p>
+          <p><strong>Email:</strong> {{ profile.email }}</p>
+          <p><strong>Mobile Number:</strong> {{ profile.phone_number }}</p>
+          <p><strong>Age:</strong> {{ profile.age }}</p>
+          <p><strong>Gender:</strong> {{ profile.get_gender_display }}</p>
+     </div>
+
+
+    <div class="section">
+        <h2>Wishlist</h2>
+        {% if wishlist_items %}
+            <ul>
+                {% for item in wishlist_items %}
+                <li>{{ item.product.name }}</li>
+                {% endfor %}
+            </ul>
+        {% else %}
+            <p class="empty">No wishlist items.</p>
+        {% endif %}
+    </div>
+
+    <div class="section">
+        <h2>Cart</h2>
+        {% if cart_items %}
+            <ul>
+                {% for item in cart_items %}
+                <li>{{ item.product.name }} (Qty: {{ item.quantity }})</li>
+                {% endfor %}
+            </ul>
+        {% else %}
+            <p class="empty">Cart is empty.</p>
+        {% endif %}
+    </div>
+
+    <div class="section">
+        <h2>Orders</h2>
+        {% if orders %}
+            <ul>
+                {% for order in orders %}
+                <li>Order #{{ order.id }} - {{ order.created_at }} - ₹{{ order.total }}</li>
+                {% endfor %}
+            </ul>
+        {% else %}
+            <p class="empty">No orders found.</p>
+        {% endif %}
+    </div>
+{% endblock content %}

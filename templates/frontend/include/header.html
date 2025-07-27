@@ -1,0 +1,48 @@
+{% load static %}
+<header>
+     <nav class="navbar navbar-expand-lg navbar-light bg-light">
+          <div class="container-fluid">
+               <a href="{% url 'home' %}">
+               <img class="logo" src="{% static 'images/image.png'%}" alt=" ">
+               </a>
+               <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+               </button>
+
+               <div class="collapse navbar-collapse" id="navbarNavDropdown">
+                    <ul class="navbar-nav">
+                    {% for x in categories %}
+                         <li class="nav-item">
+                         <a class="nav-link " aria-current="page" href="{% url 'cateogry_products' x.slug %}">{{x.name}}</a>
+                         </li>
+                    {% endfor %}
+                    </ul>
+                    <div class="mobile">
+                         <li class="nav_it ">
+                              <img class="cart" src="{% static 'images/image copy 6.png'%}" alt="">
+                         </li>
+                         <li class="nav_it">
+                              <img class="user" src="{% static 'images/image copy.png'%}" alt="">
+                         </li>
+                         <li class="nav_it">
+                              <img class="search" src="{% static 'images/image copy 2.png'%}" alt="">
+                         </li>
+                    </div>
+               </div>
+
+               <div class="cart1">
+                    <a href="{% url 'cart' %}">
+                    <div class="nav-it">
+                         <img class="cart" src="{% static 'images/image copy 6.png' %}" alt="">
+                    </div>
+                    </a>
+                    <div class="nav-it">
+                         <img class="user" src="{% static 'images/image copy.png'%}" alt="">
+                    </div>
+                    <div class="nav-it">
+                         <img class="search" src="{% static 'images/image copy 2.png'%}" alt="">
+                    </div>
+               </div>
+          </div>
+     </nav>
+</header>

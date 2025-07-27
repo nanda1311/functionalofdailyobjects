@@ -1,0 +1,187 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign In - E-Commerce</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f5f5f5;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+        
+        .signup-container {
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            padding: 30px;
+            width: 100%;
+            max-width: 500px;
+            text-align: center;
+        }
+        
+        .signup-container h1 {
+            color: #333;
+            font-size: 24px;
+            margin-bottom: 25px;
+        }
+        
+        .input-group {
+            margin-bottom: 20px;
+            text-align: left;
+        }
+        
+        .input-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: #444;
+            font-size: 14px;
+        }
+        
+        .input-group input {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 14px;
+            box-sizing: border-box;
+        }
+        
+        .input-group input:focus {
+            outline: none;
+            border-color: #4a90e2;
+            box-shadow: 0 0 0 2px rgba(74, 144, 226, 0.2);
+        }
+        
+        button[type="submit"] {
+            background-color: #4a90e2;
+            color: white;
+            border: none;
+            padding: 12px;
+            border-radius: 4px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            width: 100%;
+            transition: background-color 0.3s;
+            margin-top: 10px;
+        }
+        
+        button[type="submit"]:hover {
+            background-color: #3a7bc8;
+        }
+        
+        .signup-link {
+            text-align: center;
+            margin-top: 20px;
+            font-size: 14px;
+        }
+        
+        .signup-link a {
+            color: #4a90e2;
+            text-decoration: none;
+        }
+        
+        .signup-link a:hover {
+            text-decoration: underline;
+        }
+        
+        .error-message {
+            color: #e74c3c;
+            font-size: 12px;
+            margin-top: 5px;
+            display: none;
+        }
+        
+        @media (max-width: 600px) {
+            .signup-container {
+                padding: 20px;
+                margin: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="signup-container">
+        <h1>SIGN IN</h1>
+        <form method="POST" action="{% url 'signin' %}">
+            {% csrf_token %}
+            
+            <div class="input-group">
+                <label for="username">Email or Username</label>
+                <input type="text" id="username" name="username" placeholder="Enter your email or username" required>
+                <div class="error-message" id="username-error">Please enter your username or email</div>
+            </div>
+            
+            <div class="input-group">
+                <label for="password">Password</label>
+                <input type="password" id="password" name="password" placeholder="Enter your password" required>
+                <div class="error-message" id="password-error">Please enter your password</div>
+            </div>
+            
+            <button type="submit">LOG IN</button>
+        </form>
+        
+        <div class="signup-link">
+            Don't have an account? <a href="{% url 'signup' %}">Sign Up</a>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            // Form validation
+            const form = document.querySelector('form');
+            form.addEventListener('submit', function(e) {
+                let isValid = true;
+                
+                // Username validation
+                const username = document.getElementById('username').value.trim();
+                if (username === '') {
+                    document.getElementById('username-error').style.display = 'block';
+                    isValid = false;
+                } else {
+                    document.getElementById('username-error').style.display = 'none';
+                }
+                
+                // Password validation
+                const password = document.getElementById('password').value;
+                if (password === '') {
+                    document.getElementById('password-error').style.display = 'block';
+                    isValid = false;
+                } else {
+                    document.getElementById('password-error').style.display = 'none';
+                }
+                
+                if (!isValid) {
+                    e.preventDefault();
+                }
+            });
+            
+            // Display Django messages
+            if (!window.messagesDisplayed) {
+                window.messagesDisplayed = true;
+                {% if messages %}
+                    {% for message in messages %}
+                        Swal.fire({
+                            title: "{{ message.tags|capfirst }}",
+                            text: "{{ message }}",
+                            icon: "{{ message.tags }}",
+                            confirmButtonText: "OK"
+                        });
+                    {% endfor %}
+                {% endif %}
+            }
+        });
+    </script>
+</body>
+</html>

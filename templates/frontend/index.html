@@ -1,0 +1,322 @@
+{% extends 'frontend/base.html' %}
+{% load static %}
+
+
+{% block title %}
+     <title>Home Page</title>
+{% endblock title %}
+     
+
+
+
+{% block content %}
+
+
+
+
+
+
+<div class="img2">
+     {% for x in banners|slice:"0:1" %}
+<div style="margin-top: -70px;" class="banner5">
+     <img class="web" src="{{x.image_for_desktop.url}}" alt="" />
+     <img class="mobile" src="{{x.image_for_mobile.url}}" alt="" />
+     <h3 class="{% if x.color == 'white' %}text-white{% else %}text-dark{% endif %}">
+     {{ x.heading }}
+     </h3>
+     <p class="{% if x.color == 'white' %}text-white{% else %}text-dark{% endif %}">
+     {{x.description}}
+     </p>
+     <a href="{{x.button_url}}">
+          <button>{{x.button_text}}</button>
+     </a>
+</div>
+     {% endfor %}
+</div>
+
+<div class="cateogry">
+     <div class="container">
+     <h1 class="layout-heading ng-star-inserted" style="color: rgb(0, 0, 0);">SHOP BY CATEGORY</h1>
+     <div class="image">
+          {% for x in categories|slice:":3" %}
+          <div class="pics2">
+               <a href="{% url 'cateogry_products' x.slug %}">
+                    <img class="copy" src="{{x.image.url}}" alt="" />
+               </a>
+               <div class="text">
+                    <p>{{x.name}}</p>
+                    <div class="im">
+                         <img src="{% static 'images/right1.png'%}" alt="" />
+                    </div>
+               </div>
+          </div>
+          {% endfor %}
+     </div>
+     </div>
+</div>
+
+
+<div class="img2">
+     {% for x in banners|slice:"1:2" %}
+<div class="banner5">
+     <img class="web" src="{{x.image_for_desktop.url}}" alt="" />
+     <img class="mobile" src="{{x.image_for_mobile.url}}" alt="" />
+     <h3 class="{% if x.color == 'white' %}text-white{% else %}text-dark{% endif %}">
+     {{ x.heading }}
+     </h3>
+     <p class="{% if x.color == 'white' %}text-white{% else %}text-dark{% endif %}">
+     {{x.description}}
+     </p>
+     <a href="{{x.button_url}}">
+          <button>{{x.button_text}}</button>
+     </a>
+</div>
+
+
+     {% endfor %}
+</div>
+
+<div class="new-arrivals-section">
+     <h1 class="section-title">NEW ARRIVALS</h1>
+     <div class="product-grid">
+     {% for x in new_arrivals|slice:":3" %}
+     <a href="{% url 'product_detail' x.slug %}" class="product-card">
+          <div class="product-image">
+               <img src="{{x.image.url}}" alt="{{x.name}}" />
+          </div>
+          <div class="product-info">
+               <h3 class="product-name">{{ x.name }}</h3>
+               <p class="product-description">{{x.description}}</p>
+          </div>
+     </a>
+     {% endfor %}
+     </div>
+</div>
+
+<div class="reel">
+     <h3>WATCH AND SHOP</h3>
+     <div class="rel">
+          {% for product in video %}
+          
+          {% if product.product_url %}
+          <a  style="text-decoration: none; color: black;" href="{{product.product_url}}">
+               <div class="reels">
+                    <video autoplay muted loop src="{{ product.video.url }}"></video>
+                    <div class="product">
+                         <div class="productname">
+                              <img src="{{ product.product_image.url }}" alt="" />
+                              <div class="productimg">
+                                   <span>{{ product.name }}</span>
+                                   <span class="price">₹{{ product.current_price }} <span class="line">₹${{ product.actual_price }}</span></span>
+                                   <button>{{ product.discount_percentage }}% offer</button>
+                              </div>
+                              <div class="productprice"></div>
+                         </div>
+                    </div>
+               </div>
+          </a>
+          {% else %} 
+          <div class="reels">
+               <video autoplay muted loop src="{{ product.video.url }}"></video>
+               <div class="product">
+                    <div class="productname">
+                         <img src="{{ product.product_image.url }}" alt="" />
+                         <div class="productimg">
+                              <span>{{ product.name }}</span>
+                              <span class="price">₹{{ product.current_price }} <span class="line">₹${{ product.actual_price }}</span></span>
+                              <button>{{ product.discount_percentage }}% offer</button>
+                         </div>
+                         <div class="productprice"></div>
+                    </div>
+               </div>
+          </div>
+          {% endif %}
+          {% endfor %}
+     </div>
+</div>
+
+
+<div class="container">
+     <h1 class="layout-heading ng-star-inserted" style="color: rgb(0, 0, 0);">TRENDING COLLECTIONS</h1>
+     <div class="image2">
+     {% for x in categories|slice:"3:6" %}
+     <div class="pics2">
+          <a href="{% url 'cateogry_products' x.slug %}">
+               <img class="copy" src="{{x.image.url}}" alt="" />
+          </a>
+          <div class="text">
+               <p>{{x.name}}</p>
+               <div class="im">
+                    <img src="{% static 'images/right1.png'%}" alt="" />
+               </div>
+          </div>
+     </div>
+     {% endfor %}
+     </div>
+</div>
+
+<div class="img2">
+     {% for x in banners|slice:"2:3" %}
+     <div class="banner5">
+          <img class="web" src="{{x.image_for_desktop.url}}" alt="" />
+          <img class="mobile" src="{{x.image_for_mobile.url}}" alt="" />
+          <h3 class="{% if x.color == 'white' %}text-white{% else %}text-dark{% endif %}">
+          {{ x.heading }}
+          </h3>
+          <p class="{% if x.color == 'white' %}text-white{% else %}text-dark{% endif %}">
+          {{x.description}}
+          </p>
+          <a href="{{x.button_url}}">
+               <button>{{x.button_text}}</button>
+          </a>
+     </div>
+     {% endfor %}
+</div>
+
+
+
+<div class="container3">
+     <h1 class="layout-heading ng-star-inserted" style="color: rgb(0, 0, 0);">TECH ESSENTIALS</h1>
+     <div class="image3">
+     <div class="pics3">
+          <img src="{% static 'images/image copy 25.png'%}" alt="" />
+     </div>
+     <div class="pics3">
+          <img src="{% static 'images/image copy 26.png'%}" alt="" />
+     </div>
+     </div>
+</div>
+
+<div class="category">
+     <div class="container">
+     <h1 class="layout-heading ng-star-inserted" style="color: rgb(0, 0, 0);">ARTIST OF DAILYOBJECTS</h1>
+     <div class="image">
+          <div class="pics5">
+               <a href="{% url 'artist_page' %}">
+                    <img src="{% static 'images/image copy 27.png' %}" alt="" />
+               </a>
+          </div>
+          <div class="pics5">
+               <a href="{% url 'artist_page' %}">
+                    <img src="{% static 'images/image copy 28.png' %}" alt="" />
+               </a>
+          </div>
+          <div class="pics5">
+               <a href="{% url 'artist_page' %}">
+                    <img src="{% static 'images/image copy 29.png' %}" alt="" />
+               </a>
+          </div>
+     </div>
+     </div>
+</div>
+
+<div class="banner3">
+     <img class="web" src="{% static 'images/image copy 30.png'%}" alt="" />
+     <img src="{% static 'images/4.jpg'%}" alt="" class="mobile" />
+     <h3>CORPORATE GIFTING</h3>
+     <p class="p1">It is the season to celebrate and nurture everlasting bonds. Build lasting realtionships with our bespoke corporate solutions.</p>
+     <button type="button" class="btn btn-secondary" data-bs-toggle="tooltip" data-bs-placement="bottom" title="shop now">
+     SHOP NOW
+     </button>
+</div>
+
+<div class="img2">
+     {% for x in banners|slice:"3:4" %}
+     <div class="banner5">
+          <img class="web" src="{{x.image_for_desktop.url}}" alt="" />
+          <img class="mobile" src="{{x.image_for_mobile.url}}" alt="" />
+          <h3 class="{% if x.color == 'white' %}text-white{% else %}text-dark{% endif %}">
+          {{ x.heading }}
+          </h3>
+          <p class="{% if x.color == 'white' %}text-white{% else %}text-dark{% endif %}">
+          {{x.description}}
+          </p>
+          <a href="{{x.button_url}}">
+               <button>{{x.button_text}}</button>
+          </a>
+     </div>
+     {% endfor %}
+</div>
+
+
+<div class="marquee-section">
+     <h1>EVERYDAY INSPIRATION</h1>
+
+     {% if scrolling_images %}
+     <div class="marquee-container">
+     <marquee behavior="alternate" scrollamount="10">
+          {% for image in scrolling_images %}
+          <img src="{{ image.image.url }}" alt="Inspiration image" class="marquee-image" height="350" />
+          {% endfor %}
+     </marquee>
+     </div>
+     {% endif %}
+</div>
+
+<div class="banner4">
+     <img src="{% static 'images/image copy 32.png'%}" alt="" />
+</div>
+
+
+<div class="img2">
+     {% for x in banners|slice:"4:5" %}
+     <div class="banner5">
+          <img class="web" src="{{x.image_for_desktop.url}}" alt="" />
+          <img class="mobile" src="{{x.image_for_mobile.url}}" alt="" />
+          <h3 class="{% if x.color == 'white' %}text-white{% else %}text-dark{% endif %}">
+          {{ x.heading }}
+          </h3>
+          <p class="{% if x.color == 'white' %}text-white{% else %}text-dark{% endif %}">
+          {{x.description}}
+          </p>
+          <a href="{{x.button_url}}">
+               <button>{{x.button_text}}</button>
+          </a>
+     </div>
+     {% endfor %}
+</div>
+
+
+
+
+
+<div class="banner4">
+     <img src="{% static 'images/image copy 33.png'%}" alt="" />
+</div>
+
+<div class="banner4">
+     <img src="{% static 'images/image copy 34.png'%}" alt="" />
+</div>
+{% endblock content %}
+     
+
+
+
+
+{% block script %}
+<script>
+     document.addEventListener("DOMContentLoaded", function () {
+     // Tab switching functionality
+          const tabs = document.querySelectorAll(".tab");
+          const tabContents = document.querySelectorAll(".tab-content");
+
+          tabs.forEach((tab) => {
+               tab.addEventListener("click", function () {
+                    tabs.forEach((t) => {
+                         t.classList.remove("active");
+                         t.style.color = "#515154";
+                         t.style.backgroundColor = "transparent";
+                    });
+                    tabContents.forEach((c) => c.classList.remove("active"));
+
+                    this.classList.add("active");
+                    this.style.color = "white";
+                    this.style.backgroundColor = "black";
+                    const tabId = this.getAttribute("data-tab");
+                    document.getElementById(tabId).classList.add("active");
+               });
+          });
+     });
+</script>
+{% endblock script %}
+     
